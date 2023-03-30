@@ -1,0 +1,719 @@
+\documentclass[12pt]{article}
+\usepackage{enumitem,amsmath,amssymb,graphicx,hyperref,xcolor,float,physics,fancyhdr,lastpage,extramarks,sectsty}
+\usepackage{physoly}
+\hypersetup{colorlinks=true,linkcolor=magenta,filecolor=magenta,urlcolor=blue,}
+\allsectionsfont{\sffamily}
+\usepackage[a4paper, total={6.5in, 10in}]{geometry}
+\let\vec\mathbf
+% page formatting
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\setlength\parindent{0pt}
+\renewcommand{\sectionmark}[1]{\markright{\textsf{\arabic{section}. #1}}}
+\renewcommand{\subsectionmark}[1]{}
+\lhead{\textbf{\thepage} \ \ \nouppercase{\rightmark}}
+\chead{}
+\rhead{}
+\lfoot{}
+\cfoot{}
+\rfoot{}
+\setlength{\headheight}{14pt}
+
+\linespread{1.03} % give a little extra room
+\setlength{\parindent}{0.2in} % reduce paragraph indent a bit
+\title{\bf AP Physics C: Electricity \& Magnetism Notes}
+\author{Ashmit Dutta -- \email{\texttt{ashmit.dutta105@gmail.com}}}
+\date{}
+\begin{document}
+  \maketitle
+  \begin{center}
+  \vspace{-0.3in}
+  \begin{tabular}{rl}
+  Last Revision: \textbf{\today}
+  \end{tabular}
+  \end{center}
+  \noindent 
+  \rule{\linewidth}{0.4pt}
+  \tableofcontents
+  \newpage 
+  \section{A Note to the Reader}
+  These are notes that I made while reviewing for the AP Physics C Exam. My school does not teach E\&M so I made this as a good resource for anyone who has similar problems. While many sources were referenced, the primary ones were:
+\begin{itemize}
+    \item Halliday, Resnick, and Krane, \textit{Physics}, Volume 2, 5th Edition
+    \item The Feynman Lectures on Physics, Volume 2
+    \item Purcell and Morin, \textit{Electricity and Magnetism}
+\end{itemize}
+If you are running on time, I would advise to read these notes and then try past FRQs, but otherwise, read from one of these sources\footnote{HRK is highly recommended. The other two sources are higher level texts.}, and come back to these notes for review. 
+
+Once you've read through a section of these notes, try to make sure it makes \textit{sense}. Work out the reasoning through your head or even use \href{https://blog.doist.com/feynman-technique/#:~:text=His%20philosophies%20make%20up%20the%20Feynman%20Technique%3A%201,4%20Simplify%20your%20explanations%20and%20create%20analogies.%20}{Feynman's technique}. If you think you understood a concept, put it to test by trying a past \href{https://apcentral.collegeboard.org/courses/ap-physics-c-electricity-and-magnetism/exam/past-exam-questions}{FRQ} on it or using \href{https://isaacphysics.org/concepts?stage=all}{Isaac Physics} for harder problems. 
+
+Please email me for any corrections. You may see the source code on Github.
+\newpage 
+  \section{Electrostatics}
+  \subsection{Electric Field}
+  It is important to first understand what a field is to understand electromagnetism. Consider an example where you are sitting in your room. A heater is placed in one corner while you are sitting at your desk on the other side of the room. The temperature at where you are sitting will be colder than where the heater is. In general, you could try to represent the temperature of all the points in the room by the function $T (x, y, z)$, or with a graph plotting values of $T$. Such a distribution of temperatures can be thought of as a \textit{temperature field}. In fact, if you see the weather frequently, you may be familiar with the temperature fields. Here is an example of the temperature field from the weather in the United States on March 23, found on \href{https://www.accuweather.com/en/us/national/current-weather-maps}{accuweather.com}: 
+  \begin{center}
+      \includegraphics[width=9cm]{download (4).png}
+  \end{center}
+  There are also scalar and vector fields. For example, if we plotted the pressure all over a fluid, this field $p (x, y, z)$ would be scalar because pressure is not a vector quantity. However, if we plotted the velocity of a flowing fluid at every point, this would be a vector field $\vec v (x, y, z)$ as velocity is a vector quantity. Another way to comprehend the field is to visualize it by drawing vectors at different points in space, with each vector representing the strength and direction of the field at that particular point.
+      \begin{figure}[H]
+  \centering
+      \includegraphics[width=8cm]{field.png}
+      \caption{A depiction of drawing vector fields.}
+  \end{figure}
+  Now consider the field most talked about in mechanics: the gravitational field. In the past, we have defined gravity as a vector quantity which follows 
+  \[\vec g = \frac{\vec F}{m}.\]
+  This is, of course, experimentally verified. Near the surface of the Earth, this vector field is constant and directly downwards, normal to the surface of the planet. If we look further away, we can see something similar:
+        \begin{figure}[H]
+  \centering
+      \includegraphics[width=6cm]{earth.png}
+      \caption{Field lines of Earth from far away}
+  \end{figure}
+  The field lines are linear and are all directed to the center of the Earth. This makes sense because all objects within Earth's proximity will be attracted to it. If we add another object, like the moon, for example, then the field lines start to change. Objects closer to the moon will be more likely to stay on the moon, while objects closer to the Earth are more likely to attract to the Earth. We also note that the field lines start to curve, because the attraction from a second object disorients the linear path an object would typically take. We also can see more field lines packed near the Earth. A higher density of field lines simply shows that there is a greater force near there. 
+          \begin{figure}[H]
+  \centering
+      \includegraphics[width=8cm]{earthmoon.png}
+      \caption{Field lines of Earth and Moon.}
+  \end{figure}
+  We can also note that the field lines curve because of the law of gravitation which states that 
+  \[\vec F = G \frac{m_1 m_2}{\vec r_{12}^2}\hat{\mathbf{r}}.\]
+  This means that 
+  \[\vec g = \frac{\vec F}{m} = G \frac{m}{r^2}\propto \frac{1}{r^2}.\]
+  This means that if you are two times further away, the gravitational field strength is $\frac{1}{4}$ of its original. We can create a sort of topographical map that shows the gravitational field strength from Earth. Each solid circle is an \textbf{equipotential lines} which represents a certain field strength of constant magnitude. If the circles are more densely packed, the object is of greater mass. 
+            \begin{figure}[H]
+  \centering
+      \includegraphics[width=8cm]{topography.png}
+      \caption{Topographical map of field lines of Earth.}
+  \end{figure}
+  \subsubsection{Coulomb's Law}
+  \begin{idea}
+  Now the electric field is very similar to the gravitational field and has been experimentally verified to follow the inverse square law. In fact, it is easy to relate both fields through 
+  \[\vec g = \frac{\vec F}{m} \longleftrightarrow \vec E = \frac{\vec F}{q}.\]
+  Here $q$ is the electric charge measured in Coulombs while $\vec E$ is the electric field measured in Newtons/Coulombs. 
+  \end{idea}
+  The physicist Coulomb also derived the empirical law
+  \[\textbf{F}= k \frac{q_1 q_2}{r^2}\hat{\mathbf{r}}\]
+  where $q_1$ and $q_2$ are the values of the charge of two objects, $r$ is the distance between them, $\hat{\mathbf{r}}$ is the unit vector between both objects, and $k = \frac{1}{4\pi \varepsilon_0} = 8.98\times 10^{12}\mathrm{N\cdot m^2/C^2}$ is a constant of proportionality called Coulomb's constant. However, opposed to gravitational fields, charge can be both negative and positive. Negative charge carriers have their field lines attracted towards them, while positive charge carriers have their field lines repel away from them. 
+              \begin{figure}[H]
+  \centering
+      \includegraphics[width=8cm]{charges.jpeg}
+      \caption{A side by side depiction of negative and positive charge carriers and their equipotential lines. They are not interacting with each other. }
+  \end{figure}
+  \subsubsection{Electric Potential}
+  Suppose we have a charged object and want to carry it from $a$ to $b$. We may write the work to do so as 
+  \[W = -\int_{a}^{b} \vec F \cdot \dd \vec s.\]
+  where $\vec F = q\vec E$. What may be more interesting is to consider the work that would be done carrying one unit of charge. Then the force on this charge is the same as the electric field. We can then see that 
+  \[W(\text{unit}) = -\int_{a}^{b} \vec E \cdot \dd \vec s.\]
+  This integral, of course, is path independent. It doesn't matter what path you take, as long as you get to point $b$, the same amount of work is always done. By integrating along the shortest path, we get 
+  \[-\int_{a}^{b} \vec E \cdot \dd \vec s = -kq\int_{a}^{b}\frac{1}{r^2}\dd r = -kq \left(\frac{1}{a} - \frac{1}{b}\right).\]
+  Let $V(a)$ denote the work done from going from point $P$ to $a$, and $V(b)$ denote the work done from going from point $P$ to $b$. It can finally be written that 
+  \[\Delta V = V(b) - V(a) = -\int_{a}^{b} \vec E \cdot \dd \vec s.\]
+  We typically denote $\Delta V$ as the electrostatic potential. For the total energy of the system, we simply multiply by $q$ (as the work is per unit charge) to get $U = q \Delta V$. In the limit of $b\to \infty$, the electric potential can be written as 
+  \[V = \frac{kq}{r}.\]
+  \subsubsection{Electric Dipole}
+  An electric dipole refers to a system composed of two electric charges of equal magnitude and opposite signs that are separated by a certain distance. The charges are usually referred to as "poles," with one being a positive pole and the other a negative pole. The strength of an electric dipole is commonly measured in terms of its dipole moment $\vec p$, which is the product of the magnitude of the charges $q$ and the distance $d$ between them, $\vec p = qd$. The dipole moment is a vector quantity, pointing from the negative charge to the positive charge.
+
+  As a simple model, consider a positive charge $q$ and a negative charge $-q$ separated by a small distance $d$. 
+              \begin{figure}[H]
+  \centering
+      \includegraphics[width=8cm]{dipole.jpeg}
+      \caption{A simple dipole model.}
+  \end{figure}
+  The net electric field at a point $P$ away from the dipole can be expressed as the sum of the individual field contributions from both charges, or
+  \[\vec E = \vec E_{+} + \vec E_{-}.\]
+  Point $P$ is located a distance of $\sqrt{x^2 + (d/2)^2}$ where $x$ is the horizontal distance from the charges and $d/2$ is the vertical distance. Additionally, note that the horizontal components of $E_{+}$ and $E_{-}$ cancel out, so all that is left is the vertical components, or $E\cos\theta$ summing up to $2E_{+}\cos\theta$. Also, note that 
+  \[\cos\theta = \frac{d/2}{\sqrt{x^2 + (d/2)^2}}\]
+  which means that 
+  \[E = 2 k\frac{q}{x^2 + (d/2)^2} \frac{d/2}{\sqrt{x^2 + (d/2)^2}} = k \frac{qd}{(x^2 + (d/2)^2)^{3/2}}\]
+  Finally, note that since 
+  \[(1 + x)^n \approx 1 + nx,\]
+  then 
+  \[E \approx k \frac{p}{x^3}.\]
+  It is interesting to see how dipoles are an inverse cubic relationship as compared to the inverse square relationship to regular charges. For more complicated charge distributions, like the quadropole, you can see the field tend to be $r^{-4}$ or even smaller. 
+  \subsubsection{Charge Distributions}
+  A collection of charge carriers can be represented as a \textit{continuous charge distribution}. The field set up by a continuous charge distribution can be computed by dividing the field into continuous elements of charge $\dd q$. Each element of charge will then establish an infinitesimal electric field $\dd E$ at a certain point $P$, and then we can superimpose (add them up) every single field to compute the total electric field at a certain point. Depending on the case, we define a length density $\lambda$, surface charge density $\sigma$ or a volume charge density $\rho$. Then we can exploit the fact that 
+$$Q_{\text{net}}=\int\lambda\dd\ell=\int\sigma\dd A=\int\rho\dd V.$$
+    \subsubsection{Ring of Charge}
+    \begin{prob}
+    Consider a thin ring of radius $R$ that has a linear charge density $\lambda$. What is the electric field at a point $P$ a distance $z$ above the vertical axis of symmetry through its center?
+    \end{prob}
+    \begin{figure}[H]
+  \centering
+      \includegraphics[width=5cm]{ring.png}
+      \caption{A model of a ring of charge. The element $\lambda \dd s$ produces an electric field $\dd \vec E$.}
+  \end{figure}
+
+    We can split the ring into small segments of length $\dd s$. The charge of these elements will then be $\lambda \dd s$. Additionally, note that the distance squared of an element from a point $P$ will follow $r^2 = R^2 +z^2$ by the Pythagorean theorem. The total magnitude of the infinitesimal field is then 
+    \[\dd \vec E = k\frac{q}{r^2} = k \frac{\lambda \dd s}{R^2 + z^2}\]
+    This electric field will be oriented at an angle $\theta$. However, since the ring is symmetric, all of the horizontal components of the added up electric fields $\dd \vec E_{1x} + \dd \vec E_{2x} + \dots + \dd \vec E_{nx} = 0$. Therefore, we will only have the vertical component of the electric field left. This follows $\dd \vec E_y = \dd \vec E \cos\theta$ where 
+    \[\cos\theta = \frac{z}{r} = \frac{z}{(z^2 + R^2)^{1/2}}.\]
+    Hence, 
+    \begin{align*}
+    \vec E = \int \dd \vec E \cos\theta  = \int k \frac{\lambda \dd s}{R^2 + z^2} \frac{z}{(z^2 + R^2)^{1/2}} = \frac{kz\lambda}{(z^2 + R^2)^{3/2}} \int \dd s = \frac{kz\lambda (2\pi R)}{(z^2 + R^2)^{3/2}} \hat z.
+    \end{align*}
+    In the limit of $z\gg R$, we can find that the electric field approaches the field of a point charge, or 
+    \[E_z = \frac{kq}{z^2}.\]
+    \subsubsection{Disk of Charge}
+    \begin{prob}
+    Consider a disk of radius $R$ that has a surface charge density $\sigma$. What is the electric field at a point $P$ a distance $z$ above the vertical axis of symmetry through its center? 
+    \end{prob}
+    \begin{figure}[H]
+  \centering
+      \includegraphics[width=6cm]{disk.png}
+      \caption{A model of a disk of charge. We split the disk into many small rings which produce an electric field directly upwards.}
+  \end{figure}
+    We divide the disk up into concentric rings of radius $s$ and thickness $\dd s$. The infinitesimal area of these rings will thus be $\dd A = 2\pi s \dd s$. Therefore, the infinitesimal charge of each ring will be 
+    \[\dd q = \sigma \dd A = \sigma (2\pi s) \dd s.\]
+    Using the results from the previous section, w find that 
+    \[\dd \vec E = \frac{kz\sigma (2\pi s) \dd s}{(z^2 + R^2)^{3/2}}\hat z\]
+    Integrating lets us find 
+    \[E = \int \dd E = 2\pi k\sigma z\int \frac{s \dd s}{(z^2 + R^2)^{3/2}} = 2\pi k \sigma \left(1 - \frac{z}{\sqrt{z^2 + R^2}}\right)\]
+    We can see that when $R$ approaches infinity (i.e. an infinite disk of charge)
+    \[E = 2\pi k \sigma = \frac{\sigma}{2\varepsilon_0}.\]
+    \subsubsection{Infinite Line}
+    \begin{prob}
+    Suppose you have an infinite line of charge that has a linear charge density of $\lambda$. Find the electric field at a distance $r$ perpendicular to the wire. 
+    \end{prob}
+    We can once again split the wire into infinite elements that have length $\dd x$. The charge of these elements will then be $\dd q = \lambda \dd x$. Let $x$ be the horizontal distance of the element on the wire from the point $P$. The horizontal components of the electric field cancel out (by symmetry) so the only component left is the vertical component which follows 
+    \[\cos\theta = \frac{r}{\sqrt{r^2 + x^2}}.\]
+    Hence, 
+    \[E = \int \dd E \cos\theta = \int \frac{k\lambda \dd x}{r^2 + x^2} \cdot \frac{r}{\sqrt{r^2 + x^2}}\]
+    We can then integrate $x$ from $-\infty$ to $\infty$ to find 
+    \[E = k\lambda r \int_{-\infty}^{\infty} \frac{\dd x}{(r^2 + x^2)^{3/2}}\]
+    By performing a trigonometric substitution 
+    \[x = r\tan (u) \implies u = \arctan(x/r) \implies \dd x =r\sec^2(u)\dd u\]
+    we can find that 
+    \[E = \frac{k\lambda}{r} \int \cos (u) \dd u = \frac{2k\lambda}{r}.\]
+  \subsection{Flux}
+  Let us consider a stream of water that is flowing with a velocity $\vec v$. We bend a wire into a square area $A$ and place it perpendicular to the flow of the stream. We define the \textbf{flux} of the wire as the product of the stream velocity and its area as
+  \[|\Phi| = vA.\]
+  If we slant the wire at an angle $\theta$, such that its projected area perpendicular to the stream is $A' = A\cos\theta$, we can say the flux will be 
+  \[|\Phi| = vA\cos\theta.\]
+    \begin{figure}[H]
+  \centering
+      \includegraphics[width=10cm]{flux.jpeg}
+      \caption{The flux through different cross-sectional areas.}
+  \end{figure}
+  You may see that this is very similar to the dot product of two vectors $\vec a, \vec b$ where $\vec a \cdot \vec b = ab\cos\theta$. Therefore, we can rewrite $\Phi$ as
+  \[\Phi = \vec v \cdot \vec A\]
+  If we attempt to generalize this to any arbitrary surface, we can note that every surface can be split into small areas $\Delta A$ such that 
+  \[\Delta \Phi = \vec v \cdot \Delta \vec A\implies \Phi = \sum \vec v \cdot \Delta \vec A\]
+  In the limit of $\Delta A\to \dd A$, it is easy to note that
+  \[\Phi = \int \vec v \cdot \dd \vec A.\]
+  Now, while this stream analogy may make physical sense, in the end we are talking about electric fields. If we replace $\vec v$ with $\vec E$, we get our definition of electric flux. But, it is good to note that for a \textbf{closed} surface, that is: a surface is confined by itself (like a sphere, cylinder, etc, and NOT a cup or parabaloid), we replace the integral with a surface integral, which pretty much is a regular integral that shows it is done over the surface. This gives 
+  \[\Phi = \oint \vec E \cdot \dd \vec A\]
+  \subsection{Gauss' Law}
+  Gauss' Law concerns the flux over a closed surface as we derived in the last section. Let us suppose we had a collection of positive and negative charges which make an electric field. We then construct a Gaussian surface which may or may not encapsulate all the charges in the system, which relates the \textit{net charge} of the system to the \textit{net flux} through the surface. The construction of a Gaussian surface is arbitrary and typically depends on the symmetry of the setup as we will see later on. Gauss' Law tells us 
+  \[\varepsilon_0 \Phi = q\]
+  or 
+  \[\varepsilon_0 \oint \vec E \cdot \dd \vec A = q.\]
+  where $\varepsilon_0$ is the permittivity of free space. It may seem a little frustrating for this to just be given with no proof, but do note that Gauss' law is part of Maxwell's equations. It is an axiom that is experimentally verified. In a way, the definition of electric charge is fixed within Gauss' law, for that is what we may use to measure the charge of a particle. 
+  \subsection{Implications of Gauss' Law}
+  \subsubsection{Coulomb's Law}
+  We can derive Coulomb's law from Gauss' law. Consider a charge of value $q$ in free space. We can construct a Gaussian spherical surface of radius $r$ as shown in the picture below. The electric field acting through every point of the surface is uniform, so we can write the flux as 
+  \begin{figure}[H]
+  \centering
+      \includegraphics[width=5cm]{sphere.png}
+      \caption{Charge in free space with a spherical Gaussian surface. The lines represent the $\vec E$-fields of the charge.}
+  \end{figure}
+  \[\Phi = EA = E(4\pi r^2).\]
+  Therefore, using Gauss' law, we have 
+  \[\varepsilon_0 \Phi = q \implies \varepsilon_0 E (4\pi r^2) = q\implies E(r) = \frac{q}{4\pi \varepsilon_0 r^2}.\]
+  \subsubsection{Line Charge}
+  Consider a wire of linear charge density $\lambda$. We can construct a Gaussian surface of a cylinder around the wire as shown below. 
+  \begin{figure}[H]
+  \centering
+      \includegraphics[width=5cm]{wire.jpeg}
+      \caption{Wire in free space. The red cylinder represents the Gaussian surface.}
+  \end{figure}
+  For a length $h$, the charge enclosed in the surface is $q = \lambda h$. The electric field does not go through the upper or bottom faces of the cylinder so all the flux is enclosed within the side of the cylinder. The surface area is therefore, $2\pi rh$ where $r$ is the distance from the center of the wire. Hence, 
+  \[\varepsilon_0 \Phi = q\implies \varepsilon_0 E(2\pi rh) = \lambda h\implies E(r) = \frac{\lambda}{2\pi \varepsilon_0 r}\]
+  \subsubsection{Spherical Shell of Charge}
+  Suppose we have a hollow sphere, which has a charge $q$ on its surface. (Think of spraying electrons across the surface of a balloon.) There exist two shell theorems which are very similar to the ones of gravitation:
+  \begin{enumerate}
+      \item A uniform shell of charge acts as if all of its charge is concentrated at the center.
+      \item A charged particle inside the shell will exhibit no force on the particle. 
+  \end{enumerate}
+  \begin{figure}[H]
+  \centering
+      \includegraphics[width=5cm]{shell.jpeg}
+      \caption{A spherical shell in free space shown in black. A red and purple Gaussian surface is shown. }
+  \end{figure}
+  We can prove this with Gauss' law. Construct a sphere of radius $b > R$ where $R$ is the radius of the shell. Then, we can apply Gauss' law to this sphere to see:
+  \[\varepsilon_0 E(4\pi b^2) = q\implies E = \frac{q}{4\pi \varepsilon_0 b^2}\]
+  Now construct a sphere of radius $a < R$. We can again apply Gauss' law to this sphere to see:
+  \[\varepsilon_0 E(4\pi a^2) = 0\implies E = 0.\]
+  The reason $q = 0$ for the inner radius is because no charge is enclosed within the Gaussian surface, therefore, no electric field will be present as well. 
+  \subsubsection{Infinite Sheet of Charge}
+  Consider an infinite sheet of charge of charge density $\sigma$. We can construct a so-called \text{Gaussian pillbox} which is a cylinder that exits the sheet out of both ways. 
+  \begin{figure}[H]
+  \centering
+      \includegraphics[width=5cm]{infinite.jpeg}
+      \caption{An infinite sheet of charge in free space. The red lines consist of the pillbox, while the blue ones represent the $\vec E$-field.}
+  \end{figure}
+  For an area $A$, the enclosed charge is $q = \sigma A$. As the $\vec E$-field of the sheet exits the sheet behind and in-front of the pillbox, we can write 
+  \[\varepsilon_0 \Phi = q\implies \varepsilon_0 (EA + 0 + EA) = \sigma A\implies E = \frac{\sigma}{2\varepsilon_0}\]
+  \subsection{Conductors}
+  An electrical conductor is a solid that contains many “free” electrons. The electrons can move around freely in the material, but cannot leave the surface. Consider the interior of the conductor. By the shell theorem, the electric field inside the conductor will be zero $\vec E = 0$ because all the charges reside at its surface. This implies that the electric field just outside the conductor will be normal to its surface. 
+    \begin{figure}[H]
+  \centering
+      \includegraphics[width=6cm]{conductor.jpeg}
+      \caption{A conductor in free space. We construct a Gaussian pillbox as shown in red. The electric field in the interior is zero.}
+  \end{figure}
+  So we can construct a Gaussian pillbox to see that 
+  \[\varepsilon_0 \Phi = q\implies \varepsilon_0 (EA + 0)= \sigma A\implies E = \frac{\sigma}{\varepsilon_0}.\]
+  One may be perplexed why this result is different to the result from the infinite sheet. For another explanation apart from the shell theorem, the reason is because we derived Gauss' law to determine the difference of the electric field right inside and outside the conductor at a point. In other words, $E_{\text{outside}} - E_{\text{inside}} = \frac{\sigma}{\varepsilon_0}$, which makes sense because we know $E_{\text{inside}} = 0$ and $E_{\text{outside}} = \sigma/\varepsilon_0$. If there were no other charges around except for the ones at the surface (locally), then the inside and outside fields would have been $\pm \sigma/2\varepsilon_0$. But all the rest of the charges on the conductor "conspire" to produce an additional field to cancel out the inside field equal to $\sigma/2\varepsilon_0$. 
+  \newpage 
+  \section{Circuits}
+  \subsection{Current}
+  In an isolated conductor, the electrons are in random motion. But when a battery is connected, it generates an electric field that causes the electrons to move forwards inside the wire. If a net charge $\dd q$ passes through a given area in a time $\dd t$, we can say that the electric current has been established where 
+  \[I = \dv{q}{t}.\]
+  The SI unit of current is amperes, or coulomb/second. Additionally, per this definition, the net charge over a given time can be integrated as 
+  \[q = \int I \dd t.\]
+  \subsubsection{Current Density}
+  The current density can be represented as 
+  \[j = i/A\]
+  where $A$ is the cross-sectional area of the conductor. Current density $\vec j$ is a vector characteristic of a point within in the conductor rather than the conductor as a whole. In general, for a particular surface, we can write 
+  \[i = \int \vec j \cdot \dd \vec A.\]
+  Note that the vector $\vec j$ is oriented in the direction a positive charge carrier would point to. So an electron would point in the $-\vec j$ direction. 
+  \subsubsection{Drift Velocity}
+  Inside the conductor, a force $-e\vec E$ acts on the electrons. However, this force does not produce a net acceleration because the electron will continue colliding with the walls of the conductor or with other electrons. Eventually, the electron will reach a constant velocity within the conductor, which we call the \textbf{drift velocity}. We can compute the drift velocity in a conductor. Let $n$ be the number of electrons per unit volume. For a given length $L$ in the conductor, the net number of electrons is $N = nAL$. The charge contained within this volume is then, $q = Ne = nALe$. By the definition of current $i = \Delta q/\Delta t$, the current can be defined as 
+  \[i = \frac{nALe}{\Delta t}.\]
+  Supposing the drift velocity is $v_d$, then $\Delta t = L/v_d$, which means 
+  \[i = \frac{nALe}{L/v_d} = nAv_d e\implies v_d = \frac{i}{nAe}.\]
+  And by the definition of current density $j = i/A$, this implies $v_d =\frac{j}{ne}$. Since $\vec v_d$ and $\vec j$ are both vectors, we can rewrite this as a vector equation. Note that by convention current density is in the opposite direction of the velocity of the electrons, which means 
+  \[\vec j = -ne\vec v_d.\]
+  \subsection{Resistors}
+  \subsubsection{Ohm's Law}
+  If we apply a potential difference between a piece of wood and a piece of copper, drastic differences in current will exist. This is due to the resistance of a material. The flow of current in a resistor involves the dissipation of energy. If it takes a force $\vec F$ to push a charge carrier with an average velocity $\vec v$, any agency must accomplish work at the rate of $\vec F\cdot \vec v$. The resistance is typically defined through \textbf{Ohm's Law}, that is 
+  \[R = V/i\]
+  where $V$ is the voltage measured in volts and $i$ is the current measured in amperes. The flow of current through a conductor can be thought of as analogous to the flow of water in the pipe. The water pressure can be thought of as the potential difference (voltage) through the pipe, the rate of flow of water can be thought of as the current. The factors in the pipe which reduce the rate of flow, like its length, cross-sectional area, and type of material inside of it, can be attributed to its resistance.
+  \subsubsection{Power}
+  
+  \subsubsection{Resistivity and Conductivity}
+  We can define the resistivity $\rho$ of a material as 
+  \[\rho = \frac{E}{j}\implies \vec E = \rho \vec j.\]
+  The resistivity, as per its name, measures how resistive a material is. It is small for conductors and large for insulators. Sometimes we may refer to the conductivity $\sigma$, which is the inverse of resistivity, or 
+  \[\sigma = \frac{1}{\rho}.\]
+  The conductivity, as per its name, measures how conductive a material is. It is large for conductors and small for resistors. The current density is typically defined as $\vec j = \sigma \vec E.$ If we use Ohm's law, we can find the resistance of a conductor based on resistivity and conductivity. Note that 
+  \[R = \frac{V}{I} = \frac{LE}{jA} = \frac{L}{jA}\left(\frac{J}{\sigma}\right) = \frac{L}{A\sigma} = \frac{\rho L}{A}.\]
+  It is important to remember $R = \frac{\rho L}{A}$. 
+  \subsubsection{Other Materials (Optional)}
+  There are other materials that exist in nature. For example, semiconductors are materials whose conductivity depends on their temperature. At absolute zero, they would be perfect insulators. There are also superconductors, like copper. At low temperatures, superconductors lose all of its resistivity and electric current will continue flowing through it for years without an electric field to drive it. High temperature superconductors transition at temperatures as high as 130 K. Additionally, superconductors do not follow Ohm's law per this definition. 
+    \subsection{Parallel and Series Circuits}
+    \subsubsection{Parallel Circuits}
+    A parallel circuit is an electrical circuit in which the components (such as resistors, capacitors, and inductors) are connected across multiple paths. In other words, the components are connected in parallel to each other. \textbf{In a parallel circuit, the voltage across each component is the same, while the current through each component may be different.} This is because each component is connected across the same two points or nodes of the circuit. These two points have the same voltage potential, so the voltage across each component is the same.
+\begin{figure}[H]
+  \centering
+      \includegraphics[width=6cm]{parallel.jpeg}
+      \caption{A parallel circuit of two resistors. It can be seen that $V_{ab} = V_{cd}$.}
+  \end{figure}
+    For a resistor in parallel, the following formula exists:
+    \[\frac{1}{R_{\text{eq}}} = \sum \frac{1}{R_i}\]
+    where $R_{\text{eq}}$ is the equivalent resistance of the resistance and $R_i$ is the individual resistance of each resistor. 
+  \subsubsection{Series Circuits}
+  A series circuit is an electrical circuit in which the components are connected in a single path, one after the other. In other words, the components are connected in series to each other. \textbf{In a series circuit, the current through each component is the same, while the voltage across each component may be different.} This is because the current flowing through a series circuit is the result of the flow of electrons through the wire or conductor that connects the components. Since the wire connecting the components in a series circuit is continuous and unbroken, the same current must flow through each component in the circuit. The current is not "used up" or consumed by any of the components, but rather is transferred from one component to the next, while its magnitude remains constant throughout the circuit. 
+
+  For a resistor in series, the following formula exists:
+  \[R_{\text{eq}} = \sum R_i\]
+  where $R_{\text{eq}}$ is the equivalent resistance of the resistance and $R_i$ is the individual resistance of each resistor.
+  \subsection{Kirchhoff's Rules}
+  \subsubsection{Electromotive force}
+  The electromotive force (EMF) is a term used to describe the electrical potential difference between two points in an electric circuit, which can cause an electric current to flow between those points. The unit of EMF is the volt, and it is often represented by the symbol $\mathcal E$. Conceptually, EMF can be thought of as the driving force that causes electric charges to move through a circuit. It's like the "push" that gets the charges flowing. Imagine a water pump that's pushing water through a hose. The pump is providing the energy necessary to move the water from one end of the hose to the other. Similarly, an EMF source (like a battery or generator) provides the energy necessary to move electric charges through a circuit. The EMF is created by a separation of charges, which creates a potential difference between two points in the circuit. This potential difference is like a "pressure difference" that drives the flow of electric charges. Just as water flows from a high-pressure area to a low-pressure area, electric charges flow from a point of higher potential to a point of lower potential. It's important to note that EMF is not the same as current. Current is the actual flow of electric charges through the circuit, while EMF is the force that causes the charges to flow. Think of it like a car driving down a hill. The force of gravity is like the EMF, pushing the car downhill. The car's speed is like the current, the actual movement of the car caused by the force of gravity.
+
+  When a steady current is established a charge $\dd q$ passes through any given area in a time $t$. The amount of work positive charge carriers must do $\dd W$ from one area to another can be related to the EMF as 
+  \[\mathcal E = \dd W/\dd q.\]
+  \subsubsection{Current Rule}
+  \begin{idea}
+Kirchhoff's current law (KCL) states that the algebraic sum of currents entering and leaving a node (junction) in a circuit must be zero. Mathematically, it can be represented as:
+\[\sum_{i = 1}^{n} I_i = 0\]
+where $I_i$ is the current flowing through the $i^{th}$ branch connected to the node. 
+\end{idea}
+KCL can be thought of as the law of conservation of charge. At any point in a circuit, the total amount of charge flowing into that point must be equal to the total amount of charge flowing out of it. This is because charge is a conserved quantity, and it cannot be created or destroyed in a circuit. KCL is based on the principle of charge continuity, which states that the total amount of charge in a closed system must remain constant over time.
+\subsubsection{Applying KCL}
+To apply KCL to a circuit, we consider a junction or node where two or more branches of the circuit meet. The current flowing into the node is considered positive, while the current flowing out of the node is considered negative. By convention, we assume that current flows from higher potential to lower potential. KCL states that the algebraic sum of currents entering and leaving the node must be zero. This means that the current flowing into the node must be equal to the current flowing out of it. By applying KCL at each node in a circuit, we can determine the currents flowing through various branches of the circuit.
+  \subsubsection{Voltage Rule}
+  \begin{idea}
+      Kirchhoff's voltage law (KVL) states that the algebraic sum of voltages around a closed loop in a circuit must be zero. Mathematically, it can be represented as:
+      \[\sum_{i=1}^n V_i = 0\]
+      where $V_i$ is the voltage across the $i^{th}$ component in the loop. 
+  \end{idea}
+  KVL can be thought of as the law of conservation of energy. In a closed loop, the energy supplied to the loop by the voltage sources must be equal to the energy dissipated by the components in the loop. This is because energy is also a conserved quantity, and it cannot be created or destroyed in a circuit. KVL is based on the principle of energy conservation, which states that the total amount of energy in a closed system must remain constant over time.
+\subsubsection{Applying KVL}
+To apply KVL to a circuit, we consider a closed loop or path in the circuit that begins and ends at the same point. We then assign a direction to the loop and apply the principle of energy conservation to the loop. By convention, we assume that voltage drops across components in the direction of current flow are positive, while voltage rises are negative. KVL states that the algebraic sum of voltages around the loop must be zero. This means that the voltage drops across components in the loop must be equal to the voltage rises across voltage sources in the loop. By applying KVL to various loops in a circuit, we can determine the voltages across various components in the circuit.
+\subsubsection{Wheatstone Bridge}
+A good application of Kirchhoff's laws can be seen in the Wheatstone bridge. A Wheatstone bridge is a measuring instrument used to measure the resistance of an unknown electrical component by balancing two legs of a bridge circuit. It was invented by Samuel Hunter Christie in 1833 and later popularized by Sir Charles Wheatstone in 1843.
+
+The Wheatstone bridge circuit consists of four resistors arranged in a diamond shape with the unknown resistor placed in one of the legs of the diamond. A voltage is applied across the two opposite corners of the diamond, and the voltage difference between the other two corners is measured. By varying the resistance in one of the legs of the bridge until the voltage difference between the other two corners is zero, the resistance of the unknown component can be calculated using the known resistances and the principle of electrical symmetry.
+\begin{prob}
+Consider the Wheatstone bridge arrangement shown below with the battery having a voltage $V$. What is the value of the current flowing through the circuit?
+\end{prob}
+    \begin{figure}[H]
+  \centering
+      \includegraphics[width=14cm]{wheatstone.jpeg}
+      \caption{A depiction of KVL on a Wheatstone bridge.}
+  \end{figure}
+  We can now apply KVL to each loop in the bridge:
+  \begin{align*}
+      V &= R(I_1 - I_2) + 2R (I_1 - I_3) \\
+      0 &= -R(I_1 - I_2) - R (I_3 - I_2) + 2R I_2 \\
+      0 &= -2R (I_1 - I_3) + R(I_3 - I_2) + RI_3
+  \end{align*} 
+  Simplifying all expressions yields
+  \begin{align*}
+      V &=  3RI_1 - R I_2 - 2R I_3 \\
+      0 &= - RI_1 + 4RI_2 - RI_3 \\
+      0 &= - 2R_1 - RI_2 + 4R_3
+  \end{align*}
+  A common question asked may be why some voltages are negative and some positive. Well, it depends on the loop in question. For each loop, we write that the current must tend clockwise. But in the top right loop, for example, we found that two of the currents oppose the clockwise flow, (the $I_1 - I_2$ and $I_3 - I_2$ currents). Therefore, we must add a negative sign to these to indicate as such. We can then solve these equations to find that $I_1 = \frac{5V}{7R}$ and $I_2 = \frac{10V}{7R}$ and $I_3 = \frac{3V}{7R}$.
+  \subsection{Capacitors}
+  \subsubsection{On Dielectrics}
+  In insulators, no current flows when an electric field is applied between them. If we put some small conducting elements within the insulator, however, something interesting happens: the insulator becomes \textbf{polarized}, which means that every element in the insulator acquires a polarity. In other words, the small elements gain both a positive and negative side due to the electric field redirecting the charges on their surfaces (dipoles). As charge is conserved, these adjacent positive and negative charges cancel out. But on the surface of the insulator, the charges are not canceled out. Materials that exhibit these properties are in general called \textbf{dielectrics}. Within the dielectric, the electric field is a fixed fraction of the external electric field $\vec E_0$. We generally define the dielectric constant $\kappa$ to show that 
+  \[\vec E = \frac{\vec E_0}{\kappa}.\]
+  \begin{figure}[H]
+  \centering
+      \includegraphics[width=7cm]{dielectric.jpeg}
+      \caption{A picture of how a dielectric material works in a parallel plate capacitor.}
+  \end{figure}
+  \subsubsection{Parallel Plate Capacitor}
+  When we think of a capacitor, we usually think of a \textbf{parallel plate capacitor}. This type of capacitor has two conductive plates of area $A$ that are placed parallel to each other by a small distance $d$. The space between the plates can be a vacuum, but more often than not, contain a dielectric material, which increases the capacitance many-times. We define the capacitance of a capacitor as 
+  \[C = \frac{Q}{V}\]
+  where $Q$ is the charge per plate (positive on one and negative on the other) and $V$ is the potential difference between them. 
+  \begin{figure}[H]
+  \centering
+      \includegraphics[width=7cm]{capacitor.jpeg}
+      \caption{A parallel plate capacitor. A red Gaussian surface is shown. The electric field lines go straight perpendicularly from one plate to another because $d$ is small.}
+  \end{figure}
+  
+  \noindent By Gauss' law, we can find the applied electric field from the plates as 
+  \[\varepsilon_0 \Phi = Q\implies \varepsilon_0 (EA) = Q\implies E = \frac{Q}{\varepsilon_0 A}\]
+  If there is a dielectric, the electric fields between the plates is 
+  \[E = \frac{E_0}{\kappa}.\]
+  We can also find the voltage difference between the two plates to be $V = Ed = E_0 d/\kappa$. This can be rewritten as 
+  \[V = \frac{Qd}{\varepsilon_0 \kappa A}\]
+  And by the definition of capacitance 
+  \[C = \frac{Q}{V} = \varepsilon_0 \kappa \frac{A}{d}.\]
+  If there is no dielectric, then we can say $\kappa = 1$ to get 
+  \[C = \varepsilon_0 \frac{A}{d}.\]
+  \subsubsection{Cylindrical Capacitor}
+  Cylinder capacitors are very similar to parallel plate capacitors, except the surfaces are, of course, cylindrical. We again apply Gauss' law to a capacitor of length $L$:
+  \[\varepsilon_0 \Phi = Q \implies \varepsilon_0 E (2\pi rL) = Q\implies E = \frac{Q}{2\pi \varepsilon_0 rL}\]
+  Since $E(r)$ depends on $r$, then we must integrate to find the voltage. If the inner and outer radii are $a$ and $b$ respectively, then:
+  \[V = \int_{a}^{b} E(r) \dd r = \int_{a}^{b} \frac{Q}{2\pi \varepsilon_0 rL} \dd r= \frac{Q}{2\pi \varepsilon_0 L} \ln \left(\frac{b}{a}\right)\]
+  From the definition of capacitance, we find 
+  \[C = \frac{Q}{V} = 2\pi \varepsilon_0 \frac{L}{\ln (b/a)}.\]
+  \subsubsection{Spherical Capacitor}
+  Spherical capacitors are very similar to parallel plate capacitors, except the surfaces are, of course, spherical. We again apply Gauss' law:
+  \[\varepsilon_0 \Phi = Q\implies \varepsilon_0 E (4\pi r^2) = Q\implies E(r) = \frac{Q}{4\pi \varepsilon_0 r^2}.\]
+  We can see that $E(r)$ changes depending on its location, so we can integrate it to find the voltage. If the inner radius is $a$ and the outer is $b$, then:
+  \[V = \int_{a}^{b}E(r) \dd r = \int_{a}^{b} \frac{Q}{4\pi \varepsilon_0 r^2} \dd r = \frac{Q}{4\pi \varepsilon_0} \left(\frac{1}{a} - \frac{1}{b}\right).\]
+  The capacitance is then 
+  \[C = \frac{Q}{V} = 4\pi \varepsilon_0 \frac{ab}{b - a}.\]
+  \subsubsection{Isolated Sphere}
+  We can assign a capacitance to a single isolated sphere, by pushing the limits of $b \to \infty$. Here, we simply get 
+  \[C = 4\pi \varepsilon_0 R\]
+  where $R$ is the radius of the sphere. 
+  \subsubsection{Capacitors in Parallel}
+  In a circuit, charge is always conserved because nothing is leaving the wires. Therefore, if $n$ capacitors are in parallel, we can write that 
+  \[q = q_1 + q_2 + \dots + q_n = \sum q_i.\]
+  If the parallel combination was replaced with one equivalent capacitance $q = C_{\text{eq}} V$, we must have that 
+  \[C_{\text{eq}} V = \sum C_i \]
+  \subsubsection{Capacitors in Series}
+  In series circuits, the same amount of charge goes through each capacitor, but the voltage is different across each capacitor. Therefore, we can write 
+  \[V = V_1 + V_2 + \dots + V_n = \sum V_i.\]
+  If the series combination was replaced with one equivalent capacitance $V = \frac{q}{C_{\text{eq}}}$, we get 
+  \[\frac{q}{C_{\text{eq}}} = \sum \frac{q}{C_i}\implies \frac{1}{C_{\text{eq}}} = \sum \frac{1}{C_i}.\]
+  \subsubsection{Energy Stored in Capacitors}
+  Every continuous charge distribution has an electrostatic energy $U$ which is the work required to bring objects from infinity to their locations. Suppose that we transfer a charge $q'$ from one plate to another in a time $t$. The voltage gained through this process would then be $V' = q'/C$. By using the fact that $\Delta V = q\Delta U$, we gain 
+  \[\dd U = V' \dd q' = \frac{q'}{C} \dd q'.\]
+  Therefore, 
+  \[U = \int \dd U = \int_{0}^{q} \frac{q'}{C}\dd q' = \frac{q^2}{2C}.\]
+  From the fact that $q = CV$, we can also write that 
+  \[U = \frac{1}{2}CV^2.\]
+  \subsection{RC Circuits}
+  An RC circuit is a circuit that consists of a resistor (R) and a capacitor (C) connected in series or parallel. When a voltage is applied to an RC circuit, the capacitor charges up and discharges through the resistor. The behavior of the circuit depends on the time constants of the circuit, which are determined by the values of $R$ and $C$.
+  \subsubsection{General Behavior}
+Between the two extremes, the behavior of the circuit depends on the time constant $\tau$ of the circuit. The time constant is the product of the resistance and capacitance $RC$, and it determines how quickly the capacitor charges and discharges. If the time constant is small, the capacitor charges and discharges quickly, and the circuit behaves as if there is no capacitor present. If the time constant is large, the capacitor charges and discharges slowly, and the circuit behaves as if the capacitor is fully charged or discharged. 
+
+Since resistors provide a decaying response, it is expected that RC circuits have a decaying exponential:
+\[x(0) = x_0 e^{-t/\tau}\]
+where $x(0)$ is the initial value of some variable in the circuit, whether it is voltage or current, and $\tau$ is the time constant. For a simple RC circuit, we can work from Kirchoff's voltage law to see that 
+\[-\dv{q}{t}R - \frac{q}{C} = 0.\]
+We can then rearrange to see that 
+\[\int \frac{\dd q}{q} = - \int \frac{\dd t}{RC}\implies \ln \frac{q}{q(0)} = -\frac{t}{\tau} \implies q(t) = q_0 e^{-t/\tau}.\]
+\subsubsection{Short Time Periods}
+In a short time period (less than a few time constants), the capacitor does not have enough time to fully charge or discharge, and the circuit behaves as if the capacitor is an open circuit. This means that there is very little current flowing through the circuit, and the voltage across the capacitor and resistor is almost equal to the applied voltage. In other words, the circuit behaves as if there is no capacitor present. You can see that this makes sense because $e^{-t/\tau} \approx 1$ when $t \approx 0.$
+\begin{figure}[H]
+  \centering
+      \includegraphics[width=7cm]{initial.jpeg}
+      \caption{A picture of the RC circuit in initial state.}
+  \end{figure}
+\subsubsection{Long Time Periods}
+In a long time period (more than a few time constants), the capacitor has enough time to fully charge or discharge, and the circuit behaves as if the capacitor is a short circuit. This means that the current flowing through the circuit is primarily determined by the resistor, and the voltage across the capacitor is close to zero. In other words, the circuit behaves as if there is no voltage source present. You can see this makes sense because $e^{-t/\tau} \approx 0$ when $t\to \infty$.
+\begin{figure}[H]
+  \centering
+      \includegraphics[width=7cm]{open.jpeg}
+      \caption{A picture of the RC circuit in steady state.}
+  \end{figure}
+\subsubsection{Example}
+Try the \href{https://apcentral.collegeboard.org/media/pdf/ap19-frq-physics-c-em-set-2.pdf}{2019 FRQ Set 2 Problem 1}.
+\newpage 
+  \section{Magnetic Field}
+  \subsection{Behavior of $\vec B$-field}
+  \subsubsection{Field Lines}
+  The field lines of the magnetic field act very differently to the field lines of the electric field. While the field lines of the electric field tend to diverge from a source, the field lines of the magnetic field tend to curl around it. For example, let us take a wire that has a current flowing through it. Looking at the wire from above will show us that:
+  \begin{figure}[H]
+  \centering
+      \includegraphics[width=6cm]{bfield.jpeg}
+      \caption{The $\vec B$-field lines of the wire. The current is out of the page.}
+  \end{figure}
+  Here, the field lines curl around the wire counter-clockwise since the electric current is out of the page. On the contrary, the field lines will curl clockwise if the current is into the page. In general, we can posit the "curl"-rule. This is, take your right hand and make a fist. Then stick your thumb out of the fist. The direction of your thumb will be the direction of current. The direction your fingers are oriented at will be the direction the field lines will curl.
+  \begin{figure}[H]
+  \centering
+      \includegraphics[width=6cm]{curl1.jpeg}
+      \caption{The "curl"-rule.}
+  \end{figure}
+  Additionally, if you are unfamiliar with the crosses and circles, this simply shows the direction of the field lines. If they are into the page, they are given by a cross, and if they are out of the page, they are given by a circle. 
+    \begin{figure}[H]
+  \centering
+      \includegraphics[width=6cm]{circlecross.jpeg}
+      \caption{Circles and crosses.}
+  \end{figure}
+  You can use the arrowhead analogy. Suppose you are shooting a bow and arrow. Once you let it release, you will see the feathers of the arrow, which make a cross. But if the arrow comes to you, you will last see a circle. 
+  \subsubsection{The Lorenz force}
+  \begin{idea}
+  For a charged particle moving in electric and magnetic fields, the total force on the particle is given as 
+  \[\vec F = q(\vec E + \vec v \times \vec B)\]
+  where $\vec v$ is the velocity of the particle, $\vec B$ is the magnetic field, $q$ is the charge of the particle, and $\vec E$ is the electric field.
+  \end{idea}
+  We are already familiar with the $qE$ term from electrostatics, but the $q\vec v \times \vec B$ term is new. Here, $\times$ symbol implies the \href{https://en.wikipedia.org/wiki/Cross_product}{cross product}. You should know how to find the direction of the cross product to predict the latter motion of particles. To do so, you can use the right hand rule. First, take your right hand. Orient your thumb in the direction of the particles velocity. Then orient, your index finger in the direction of the magnetic field. Your middle finger, or the direction your open palm points in, will then be the direction of force. 
+  \begin{figure}[H]
+  \centering
+      \includegraphics[width=6cm]{righthand.jpeg}
+      \caption{The right hand rule.}
+  \end{figure}
+  \subsubsection{Velocity Selector}
+  A common application of the Lorenz force is when a beam of charged particles pass through a region where the $\vec E$ and $\vec B$ fields are perpendicular to each other. As such, the electromagnetic force and the magnetic force will be oriented opposite to each other (verify this with right hand rule). Therefore, we can balance forces as 
+  \[qE = qvB\implies v = \frac{E}{B}.\]
+  It is interesting to note that the velocity of the particles do not depend on their charge or mass. 
+  \subsubsection{Cyclotron}
+  A cyclotron is a type of particle accelerator used to accelerate charged particles to very high energies. It was invented by Ernest O. Lawrence in 1932 and has since become an essential tool in the field of nuclear physics and medical research.
+
+The basic principle of a cyclotron is that a charged particle, such as a proton, is injected into a magnetic field that causes it to move in a circular path. The magnetic field is created by a series of magnets arranged in a donut-shaped device called a "dees." The dees are connected to a high-frequency oscillator, which alternates the polarity of the magnetic field at a precise frequency, causing the charged particle to move in a spiral path of increasing radius.
+  \begin{figure}[H]
+  \centering
+      \includegraphics[width=6cm]{cyclotron.png}
+      \caption{An image of the cyclotron. The direction of the particles are shown. The magnetic field is directed into the page.}
+  \end{figure}
+Suppose the magnetic field is directed downwards. Then the magnetic force is directed inwards (by $q\vec v \times \vec B$). Therefore, we can find the radius of motion by equating the centripetal force to the magnetic force, or 
+\[qvB = \frac{mv^2}{R}\implies v = \frac{qBR}{m}. \]
+And the corresponding (nonrelativistic) kinetic energy would be 
+\[\frac{1}{2}mv^2 = \frac{q^2 B^2 R^2}{2m}.\]
+\subsubsection{Magnetic Force on a Current}
+Suppose electrons travel inside the piece of wire with a drift velocity of $v_d$. The sideways force on each electron of charge $q = -e$ is then $-e\vec v_d \times \vec B.$ Hence the total force on the wire segment given there are $N$ electrons is 
+\[\vec F = -Ne\vec v_d \times \vec B = -nAeL \vec v_d\times \vec B\]
+where $n$ is the number density of electrons, $A$ is the cross-sectional area, and $L$ is the length of the wire. But note that $nAev_d = I$ where $I$ is the current, so 
+\[\vec F = -nAeL \vec v_d \times \vec B = i\vec L \times \vec B.\]
+\begin{idea}
+If we cut the wire into small segments of length $\dd \vec s$, then the infinitesimal force on each segment can be written as 
+\[\dd \vec F = I \dd \vec s \times \vec B\]
+\end{idea}
+\subsubsection{The Biot Savart Law}
+Consider two currents $i_1$ and $i_2$ and their corresponding elements, $\dd \vec s_1$ and $\dd \vec s_2$. Then, from our previous section, the magnetic force $\dd \vec F_{21}$ exerted on element 2 by current 1, will be
+\[\dd \vec F_{21} = i_2 \dd \vec s_2 \times \vec B_1\]
+where the magnetic field $\vec B_1$ acting on element 2 is due to current $i_1$. Note that in the electric field analogy, if we have a particle of charge $\dd q_1$, the applied electric field will be
+\[\vec E_1 = \frac{1}{4\pi \varepsilon_0} \frac{\dd q_1}{r^2} \vec u = \frac{1}{4\pi \varepsilon_0} \frac{\dd q}{r^3} \vec r\]
+Here, $\vec u = \vec r/|r|$ is the unit vector in the direction of $\vec r$.
+\begin{idea}
+Similarly, we can write $\vec B_1$ as 
+\[\dd \vec B_1 = k \frac{i_1 \dd \vec s_1 \times \vec u}{r^2} = k \frac{i_1 \dd \vec s_1 \times \vec r}{r^3}.\]
+Here $k$ is a constant of proportionality given as 
+\[k = \frac{\mu_0}{4\pi} = 10^{-7}\;\mathrm{T \cdot m/A}\]
+where $\mu_0 = 4\pi \times 10^{-7}\;\mathrm{T \cdot m/A}$. We are now able to write general results for the magnetic field due to an arbitrary current distribution.
+\end{idea}
+Combining $\dd \vec B$ with the expression for $\dd \vec F$ allows us to find the force from an arbitrary current distribution. We can find the total magnetic field as 
+\[\vec B = \int \dd \vec B = \frac{\mu_0}{4\pi}\int \frac{i \dd \vec s \times \vec r}{r^3}\]
+Suppose we have a current loop as shown below. The direction of current $i \dd \vec s$ makes an angle $\theta$ with the direction vector $\vec r$. Therefore, we can write the cross product as $i \dd \vec s \times \vec r = i \dd s \sin\theta$. 
+  \begin{figure}[H]
+  \centering
+      \includegraphics[width=6cm]{biot.png}
+      \caption{The magnetic field due to a current loop.}
+  \end{figure}
+Therefore, we can write that 
+\[\vec B = \int \dd \vec B = \frac{\mu_0}{4\pi} \int \frac{i \dd s \sin\theta}{r^2}\]
+\subsubsection{Long Straight Wire}
+\begin{prob}
+Suppose an infinite long straight wire extends from $-\infty$ to $\infty$. What is the magnetic field at a distance $R$ perpendicular to the rod? 
+\end{prob}
+  \begin{figure}[H]
+  \centering
+      \includegraphics[width=6cm]{longwire.png}
+      \caption{The magnetic field from a long straight wire.}
+  \end{figure}
+  We can use the results from the previous section, and generalize the cross product for an angle $\theta$. If we define the variable of integration to be $x$ as seen in the diagram, we get 
+  \[\dd B = \frac{\mu_0}{4\pi} \frac{ i \dd s \sin\theta}{r^2}\implies B = \frac{\mu_0 i}{4\pi}\int_{-\infty}^{\infty}\frac{\sin\theta \dd x}{R^2 + x^2} \]
+  Since $\sin\theta = \frac{R}{\sqrt{R^2 + x^2}},$ we get 
+  \[B = \frac{\mu_0 i}{4\pi}\int_{-\infty}^{\infty} \frac{R}{(R^2 + x^2)^{3/2}} \dd x = \frac{\mu_0 i}{2\pi R}\]
+\subsubsection{Circular Current Loop}
+\begin{prob}
+    What is the magnetic field through the center of a circular loop of current of radius $R$ and current value $I$?
+\end{prob}
+Let us denote the radius of the ring to be $R$. Consider an element on the ring of length $d\ell$. Consider an object that is an height $z$ above the circular wire. Each small element on this ring contributes an infinitesimal magnetic field $d\mathbf{B}$ perpendicular to the distance vector $\mathbf{r}$ which acts on the object at an angle $\theta$ (refer to figure 7 for the electrical analogue). Since this object is a ring, the total magnetic field $\mathbf{B}$ must point upwards by symmetry. Using Biot-Savart's law, we can then say
+\[\dd\mathbf{B} = \frac{\mu_0 I}{4\pi} \frac{\dd\mathbf{\ell} \times \hat{\mathbf{r}}}{r^2}\implies dB_z = \frac{\mu_0}{4\pi}\frac{d\ell}{r^2}\cos\theta.\]Note that $\cos \theta = R/r$ where $\mathbf{r}$ is the distance vector once again. This means that we can now integrate as shown below:
+\[\dd B_z = \frac{\mu_0}{4\pi}\frac{\dd \ell\cdot R}{r^3}\implies \int \dd B_z = \int_{0}^{2\pi} \frac{\mu_0}{4\pi}\frac{\dd \ell\cdot R}{r^3}.\]Note that $\int \dd \ell = 2\pi R$ therefore,
+\[B_z = \frac{\mu_0 I}{4\pi}\cdot \frac{2\pi R^2}{r^3} = \frac{\mu_0 IR^2}{2(R^2 + z^2)^{3/2}}.\]The magnetic field at the center of the ring will then be evaluated at $z  = 0$ or
+\[B_0 = \frac{\mu_0 I}{2R}.\]
+\subsubsection{Two Parallel Wires}
+Suppose two wires of length $L$ and  currents $i_1$ and $i_2$ travel side-by-side a distance $d$ from each other. From our result for long straight current loops, the magnetic field from one wire will follow $B = \frac{\mu_0 i}{2\pi r}.$ Additionally, we know that the force from an element 2 on the second wire acting on the first wire will follow 
+\[\vec F_{21} = i_2 \vec L \times \vec B_1.\]
+Hence,
+\[\vec F_{21} = i_2 L \frac{\mu_0 i_1}{2\pi d} = \frac{\mu_0 i_1 i_2 L}{2\pi d}.\]
+\subsubsection{Monopoles Don't Exist}
+As we know in our study of electrostatics, Gauss' law of electromagnetism is extremely useful to describe electrostatic configurations. 
+\begin{idea}
+Gauss tried to create a similar law for magnetism. In short, he found that 
+\[\mu_0 \oint \vec B \cdot \dd \vec A = 0.\]
+In other words, the net magnetic flux through any surface is zero. You can think of this law as stating that there are no individual magnetic charges, like there are electric charges. That is “magnetic monopoles” do not exist.
+\end{idea}
+To understand this, consider a hypothetical magnetic monopole, which would be a particle that has only a north or a south magnetic pole, but not both. If such a particle existed, then it would produce magnetic field lines that originate or terminate at the magnetic pole, similar to the electric field lines that originate or terminate at an electric charge.
+
+If we enclose the magnetic monopole within a closed surface, the magnetic flux through the surface would be proportional to the strength of the magnetic monopole. This is because the magnetic flux is the product of the magnetic field and the surface area, and the magnetic field strength is highest at the magnetic pole.
+
+However, the Gauss's law of magnetism states that the magnetic flux through any closed surface is always zero, regardless of the shape or size of the surface. This implies that there can be no magnetic monopoles that produce a net magnetic flux through any closed surface, which is consistent with the experimental observation that all magnetic poles come in pairs of north and south poles.
+
+Therefore, the Gauss's law of magnetism implies that the existence of magnetic monopoles is not possible in a classical electromagnetic theory, and that magnetic fields can only arise from magnetic dipoles or currents. However, it is important to note that there are some exotic theories, such as grand unified theories or string theory, which predict the existence of magnetic monopoles, but they have not yet been observed experimentally.
+\subsubsection{Ampere's Law}
+Ampere's law is one of the most fundamental laws of electromagnetism and is a generalization of the Biot Savart law. It is also part of Maxwell's four equations. 
+\begin{idea}
+In short, Ampere's law states that the magnetic field along a closed loop is proportional to the electric current passing through the loop. Mathematically, it can be written as:
+\[\oint \vec B \cdot \dd \vec s = \mu_0 i\]
+As we travel around the loop, we calculate $\vec B\cdot \dd \vec s$ at every point and add (integrate) all quantities around the loop. This is called the line integral. 
+\end{idea}
+An Amperian loop is a closed loop used in the context of Ampere's law to calculate the line integral. An Amperian loop is any closed path that encloses the current-carrying conductor or current-carrying region of interest.
+
+The choice of the Amperian loop is arbitrary, but it is important that the loop encloses the current-carrying conductor or region of interest and that it is chosen in such a way that the magnetic field is constant along the entire loop. This ensures that the line integral of the magnetic field along the loop can be easily calculated using Ampere's law.
+\subsubsection{Infinite Wire of Current with Ampere's law}
+\begin{prob}
+Suppose an infinite long straight wire extends from $-\infty$ to $\infty$. What is the magnetic field at a distance $R$ perpendicular to the rod? 
+\end{prob}
+Consider a circular Amperian loop below which is a circular path of radius $r$.
+    \begin{figure}[H]
+  \centering
+      \includegraphics[width=6cm]{ampereloop.png}
+      \caption{A visualization of Faraday's experiment.}
+  \end{figure}
+  We can now apply Ampere's law on this closed loop to find that 
+  \[\oint \vec B \cdot \dd \vec s = B \oint \dd \vec s = B (2\pi r).\]
+  This must equal to the RHS, so 
+  \[B(2\pi r) = \mu_0 i\implies B(r) = \frac{\mu_0 i}{2\pi r}.\]
+  This is much cleaner compared to the result with Biot Savart's law. One may ask, why should we use Biot Savart's law then? Well, it is a much more generalized law that can help us find the magnetic field from any current distribution. Ampere's law may be nicer, but it will only be nicer for more symmetric shapes. For more complex shapes, it will be hard to find the right Amperian loop. 
+  \subsubsection{Solenoids}
+  A solenoid is a long, cylindrical coil of wire that is often used in electromagnets, transformers, and inductors. It is typically made of a tightly wound coil of insulated copper wire, with many turns of wire per unit length.
+
+When an electric current passes through the solenoid, it creates a magnetic field inside the coil. The magnetic field lines run parallel to the axis of the solenoid, and the field is strongest at the center of the coil.
+    \begin{figure}[H]
+  \centering
+      \includegraphics[width=6cm]{solenoid.png}
+      \caption{The magnetic field lines in a solenoid. They run parallel to it and escape at the endings.}
+  \end{figure}
+We can find the value of the magnetic field within the solenoid using Ampere's law. Construct a rectangular loop going through the solenoid and out as shown below. 
+    \begin{figure}[H]
+  \centering
+      \includegraphics[width=6cm]{amperesolenoid.png}
+      \caption{An Amperian loop within the solenoid.}
+  \end{figure}
+  Note that we can now apply Ampere's law by performing the line integral:
+  \[\oint \vec B \cdot \dd \vec s = \oint_a^b \vec B \cdot \dd \vec s+ \oint_b^d  \vec B \cdot \dd \vec s+ \oint_d^c \vec B \cdot \dd \vec s+ \oint_c^a\vec B \cdot \dd \vec s\]
+  The first integral will equal to $0$ because the magnetic field is practically zero outside of the solenoid. The second and fourth integrals will equal to $0$ because the magnetic field lines are perpendicular to the loop, so the dot product $\vec B \cdot \dd \vec s = B\dd s\cos (90) = 0$. The third integral will equal to $Bh$ where $h$ is an arbitrary length of the loop. Therefore, the total line integral equates
+  \[\oint \vec B \cdot \dd \vec s = Bh.\]
+  Let $n$ be the number of turns per unit length of the solenoid. The current that passes through will hence be $i = i_0 nh$. Therefore, 
+  \[\oint \vec B \cdot \dd \vec s = \mu_0 i \implies Bh = \mu_0 i_0 nh \implies B = \mu_0 i_0 n.\]
+  \subsection{Induction}
+  \subsubsection{Faraday's Experiment}
+  Faraday's experiment for induction is a classic demonstration of how a changing magnetic field can induce an electric current in a conductor. The experiment involves a coil of wire, a magnet, and a galvanometer (a device that measures small electrical currents).
+
+In the experiment, Faraday took a coil of wire and connected it to a galvanometer. He then moved a bar magnet back and forth inside the coil of wire, without actually touching the wire. As the magnet moved, it created a changing magnetic field around the coil of wire. Faraday observed that this changing magnetic field induced a current in the wire, which he could measure with the galvanometer.
+    \begin{figure}[H]
+  \centering
+      \includegraphics[width=6cm]{faraday.jpeg}
+      \caption{A visualization of Faraday's experiment.}
+  \end{figure}
+Faraday found that the direction of the induced current was dependent on the direction of the magnetic field and the direction of the motion of the magnet.   \begin{itemize}
+    \item If the magnet is moving, the galvanometer deflects.
+    \item If the magnet stops moving, the galvanometer stops as well. 
+    \item If the magnet moves away, the galvanometer deflects in the opposite way.
+  \end{itemize}
+
+Faraday's experiment demonstrated the \textbf{principle of electromagnetic induction}, which states that a changing magnetic field can induce an electric current in a conductor. This principle is the basis for the operation of electric generators, where a rotating coil of wire is used to generate electricity by inducing a current in a stationary conductor.
+  The current in this experiment is called the induced current. Faraday reasoned that this current depends on the magnetic flux acting on a closed surface. To be precise, we can write 
+  \[\Phi_B = \int \vec B \cdot \dd \vec A\]
+  For a constant area that is slanted at angle $\theta$, the new projected area would be $A' = A\cos\theta$ which implies that $\Phi = BA\cos\theta$.
+  \subsubsection{Faraday's Law of Induction}
+  Faraday eventually found that "the induced electromotive force in a circuit is equal to the negative of the rate at which the magnetic flux is changing over time." For a given loop of $N$ turns, this can be written mathematically as 
+  \[\mathcal{E} = -N\dv{\Phi}{t}\]
+  \subsubsection{Lenz's Law}
+  \begin{idea}
+  Lenz's law describes the direction of the induced current that is generated by a changing magnetic field. The law states that the direction of the induced current is always such that it opposes the change that produced it.
+\end{idea}
+In other words, if a magnetic field is changing in a certain direction, the induced current will flow in the opposite direction in order to try to counteract the change. This principle is based on the law of conservation of energy, which states that energy cannot be created or destroyed, only transformed from one form to another.
+
+For example, consider a coil of wire with a magnetic field passing through it. If the magnetic field is increasing in strength, Lenz's law predicts that an induced current will flow in the coil in such a way as to create a magnetic field that opposes the increase in the original field. If the magnetic field is decreasing, the induced current will flow in such a way as to create a magnetic field that opposes the decrease in the original field.
+    \begin{figure}[H]
+  \centering
+      \includegraphics[width=8cm]{lenz.png}
+      \caption{A visualization of Lenz's law. A magnet is brought close to a current carrying loop of wire. Notice how the current on the loop rotates to make the polarity of the loop opposite to the magnet (North and North repel, so it gets harder to push the magnet towards the loop).}
+  \end{figure}
+  \subsubsection{Eddy Currents}
+  A good example of Lenz's law can be found in Eddy currents. Eddy currents are currents that are induced in a conductor (such as a copper tube) when it is exposed to a changing magnetic field. These currents flow in circles within the conductor and are responsible for creating a magnetic field that opposes the original changing magnetic field. 
+
+An example of eddy currents can be demonstrated with a copper tube and a magnet. If a magnet is moved back and forth near the copper tube, the magnetic field around the magnet changes, inducing eddy currents in the copper tube. These eddy currents create their own magnetic field that opposes the original magnetic field of the magnet. As a result, the magnet experiences a force that slows down its movement. See a \href{https://youtu.be/H31K9qcmeMU}{video} here. 
+
+The effect of eddy currents can be enhanced by using a conductive material like copper because it has low electrical resistance, which allows the induced current to flow more easily. Furthermore, using a tube shape maximizes the effect of eddy currents because the circular currents can flow around the circumference of the tube.
+\subsubsection{Induced Electric Fields}
+An induced electric field is a field that arises in a region of space due to a change in the magnetic field in that region. This change can be caused by a variety of factors, such as the motion of a charged particle or a changing current in a nearby conductor.
+
+According to Faraday's law of induction, a changing magnetic field induces an electric field in any nearby conductor. This electric field is responsible for generating an induced current in the conductor.
+
+Consider a charge $q_0$ moving in a circular path around a magnetic field that is perpendicular to its velocity. The work done on this charge must be $W = \mathcal{E}q_0$. Equivalentally, we can express the work done as $q_0 E (2\pi r).$ Therefore, we find 
+\[\mathcal{E} = E (2\pi r).\]
+In general, for any closed path, we can relate the induced EMF as 
+\[\mathcal{E} = \oint \vec E \cdot \dd \vec s.\]
+Hence, equating to Faraday's law for changing magnetic flux, we find 
+\[\oint \vec E \cdot \dd \vec s = -\dv{\Phi}{t}.\]
+In this form, Faraday's law appears as one of Maxwell's four basic laws of electromagnetism. 
+  \subsection{Inductance}
+  \subsubsection{Inductors}
+  An inductor maintains a voltage that resists a change in current (Lenz's law). This means the voltage across an inductor is 
+  \[V = -L \dv{I}{t}\]
+  where $L$ is the inductance. Since the voltage across cannot be infinite, the current across it has to be differentiable. When
+inductors are added in series, the equivalent inductance is:
+\[L_{\text{eq}} = L_1 + L_2 + \dots + L_n = \sum L_i\]
+and in parallel:
+\[L_{\text{eq}} = \left(\frac{1}{L_1} + \frac{1}{L_2} + \dots + \frac{1}{L_n}\right)^{-1} = \left(\sum \frac{1}{L_i}\right)^{-1}.\]
+The energy stored in an inductor is 
+\[E = \frac{1}{2}LI^2.\]
+\subsubsection{Calculating Inductance}
+Let $N$ be the number of turns of the coil. By Faraday's law:
+\[\mathcal{E}_L = -\dv{(N\Phi)}{t}.\]
+Replacing $\mathcal{E}_L$ gives us
+\[L\dv{i}{t} = \dv{(N \Phi)}{t} \implies L = \frac{N\Phi}{i}.\]
+In general, the inductance for any shape can be written as 
+\[L = \frac{N}{i} \int \vec B \cdot \dd \vec A.\]
+\subsubsection{Inductance of a Solenoid}
+The magnetic flux through one loop of the solenoid will be $\Phi = BA = \mu_0 ni$. For $N$ loops, we find $N\Phi = (nl) B = \mu_0 n^2 ilA$. The equation from the previous section gives inductance directly as 
+\[L = \frac{N\Phi}{i} = \frac{\mu_0 n^2 ilA}{i} = \mu_0 n^2 lA.\]
+The inductance per unit length of the solenoid is thus 
+\[\ell = \frac{L}{l} = \mu_0 n^2 A.\]
+\subsubsection{LR Circuits}
+Suppose the circuit intially has $0$ emf and has an initial current $I_0$. According to Kirchoff's laws, 
+\[RI + L \dv{I}{t} = 0.\]
+Hence, 
+\[\frac{\dd I}{I} = -\frac{R\dd t}{L}\implies \ln I - \ln I_0 = -\frac{Rt}{L}\implies I = I_0 e^{-Rt/L}.\]
+Now, when the emf is turned on, we have by Kirchoff's laws:
+\[RI + L \dv{I}{t} = e.\]
+By separating variables, we obtain 
+\[\frac{\dd I}{I - e/R} = - \frac{R\dd t}{L}\implies I = \frac{e}{R}(1 - e^{-Rt/L}).\]
+Superimposing both solutions yields
+\[I(t) = I_0 e^{-Rt/L} + \frac{e}{R} (1 - e^{-Rt/L}).\]
+Here, we can see that the time constant is $\tau = L/R.$
+\end{document}
